@@ -151,8 +151,23 @@ public class AVLTree<T extends Comparable<? super T>> {
 	
 	//Final Part 2 Question.
 	public Set<T> outer() {
-		return null;
-	}
+    Set<T> result = new HashSet<>();
+    outer(root, result, true, true);
+    return result;
+}
+
+private void outer(Node node, Set<T> result, boolean leftEdge, boolean rightEdge) {
+    if (node == null) {
+        return;
+    }
+
+    if (leftEdge || rightEdge || node.left == null || node.right == null) {
+        result.add(node.data);
+    }
+
+    outer(node.left, result, leftEdge, rightEdge && node.right == null);
+    outer(node.right, result, leftEdge && node.left == null, rightEdge);
+}
 	
 	/****************************************/
 	
